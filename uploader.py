@@ -168,9 +168,10 @@ for i in range(0,len(urls)):
 print('Успешно! Жду новых постов...')
 
 while True:
-    for i in range(0,len(tokens)):
-        get_friends(tokens[i])
-    for i in range(0,len(tokens)):
-        sendd_comment(0,tokens[i])
+    for j in range(0,len(owner_ids)):
+        for i in range(0,len(tokens)):
+            get_friends(tokens[i])
+        for i in range(0,len(tokens)):
+            sendd_comment(j,tokens[i])
     print(f'Отдыхаю, чтобы не забанило')
-    t.sleep(random.randint(30, 60))
+    t.sleep(random.randint(60, 70))
