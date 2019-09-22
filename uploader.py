@@ -73,30 +73,42 @@ last_posts = ['']
 
 version = '5.101'
 
+def check_balance(key):
+    response = requests.post(f'https://rucaptcha.com/res.php?key={key}&action=getbalance')
+    return response.text
+
 
 def sendd_comment(num,access_token):
     global image_link
     response = requests.post(f'https://api.vk.com/method/wall.post?owner_id={owner_ids[num]}&from_group=0&message={messages[random.randint(0,len(messages)-1)]}&access_token={access_token}&v={version}')
-    print(response.json())
     text = response.json()
     try:
-        sid = text['error']['captcha_sid']
-        print(f'sid ={sid} ')
-        image_link = text['error']['captcha_img']
-
-        user_answer = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(captcha_link=image_link)
-        if not user_answer['error']:
-            # решение капчи
-            print('Разгадываю капчу')
-            key = user_answer['captchaSolve']
-        elif user_answer['error']:
-            # Тело ошибки, если есть
-            print(user_answer['errorBody']['text'])
-            print(user_answer['errorBody']['id'])
-        response_second = requests.post(f'https://api.vk.com/method/wall.post?owner_id={owner_ids[num]}&from_group=0&message={messages[random.randint(0, len(messages) - 1)]}&captcha_sid={sid}&captcha_key={key}&access_token={access_token}&v={version}')
-        print(response_second.json())
+        if len(text['response']) > 0:
+            print(f'Отправил комментарий в группе - {owner_ids[num]}')
     except:
-        print('error! Возможно, группа не запрашивает капчу, либо закончились деньги')
+        print('Разгадываю капчу')
+    balance = check_balance(RUCAPTCHA_KEY)
+    if float(balance)>25:
+        try:
+            sid = text['error']['captcha_sid']
+            image_link = text['error']['captcha_img']
+            user_answer = ImageCaptcha.ImageCaptcha(rucaptcha_key=RUCAPTCHA_KEY).captcha_handler(captcha_link=image_link)
+            if not user_answer['error']:
+                # решение капчи
+                key = user_answer['captchaSolve']
+            elif user_answer['error']:
+                # Тело ошибки, если есть
+                print(user_answer['errorBody']['text'])
+                print(user_answer['errorBody']['id'])
+            response_second = requests.post(f'https://api.vk.com/method/wall.post?owner_id={owner_ids[num]}&from_group=0&message={messages[random.randint(0, len(messages) - 1)]}&captcha_sid={sid}&captcha_key={key}&access_token={access_token}&v={version}')
+            otvet = response_second.json()
+            if len(otvet['response'])>0:
+                print(f'Отправил комментарий в группе - {owner_ids[num]}')
+            #print(response_second.json())
+        except:
+            print('error! Возможно, группа не запрашивает капчу, либо закончились деньги')
+    else:
+        print('Работа остановлена, т.к баланс ниже указанного')
 
 def get_postid(url,headers):
     session = requests.session()
@@ -168,10 +180,14 @@ for i in range(0,len(urls)):
 print('Успешно! Жду новых постов...')
 
 while True:
+    balance = check_balance(RUCAPTCHA_KEY)
     for j in range(0,len(owner_ids)):
         for i in range(0,len(tokens)):
             get_friends(tokens[i])
         for i in range(0,len(tokens)):
             sendd_comment(j,tokens[i])
     print(f'Отдыхаю, чтобы не забанило')
+    print(f'Баланс - {balance}')
     t.sleep(random.randint(60, 70))
+
+    #375447282166
