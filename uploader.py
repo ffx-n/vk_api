@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup as bs
 import random
 import time as t
+import os
 import datetime
 from python_rucaptcha import ImageCaptcha, RuCaptchaControl, CallbackClient
 RUCAPTCHA_KEY = "ef551ea14523d66b0def6bad1148345f"
@@ -44,7 +45,7 @@ for i in range(0,num_lines):
     lines1[i]=lines1[i].strip()
     messages.append(lines1[i])
 del messages[0]
-
+'''
 token = open('access_token.txt')
 lines2 = token.readlines()
 num_lines = sum(1 for line in open('access_token.txt'))
@@ -53,7 +54,8 @@ for i in range(0,num_lines):
     tokens.append(lines2[i])
 del tokens[0]
 #access_token = lines2[0]
-
+'''
+tokens.append(os.environ.get('token1'),os.environ.get('token2'))
 f = open('groups.txt')
 lines3 =f.readlines()
 num_lines_groups = sum(1 for line in open('groups.txt'))
@@ -88,7 +90,7 @@ def sendd_comment(num,access_token):
     except:
         print('Разгадываю капчу')
     balance = check_balance(RUCAPTCHA_KEY)
-    if float(balance)>10:
+    if float(balance)>25:
         try:
             sid = text['error']['captcha_sid']
             image_link = text['error']['captcha_img']
@@ -107,6 +109,7 @@ def sendd_comment(num,access_token):
             #print(response_second.json())
         except:
             print('error! Возможно, группа не запрашивает капчу, либо закончились деньги')
+            print(f'Отправил комментарий в группе - {owner_ids[num]}')
     else:
         print('Работа остановлена, т.к баланс ниже указанного')
 
@@ -183,7 +186,7 @@ while True:
     balance = check_balance(RUCAPTCHA_KEY)
     for j in range(0,len(owner_ids)):
         #for i in range(0,len(tokens)):
-            #get_friends(tokens[i])
+        #    get_friends(tokens[i])
         for i in range(0,len(tokens)):
             sendd_comment(j,tokens[i])
     print(f'Отдыхаю, чтобы не забанило')
