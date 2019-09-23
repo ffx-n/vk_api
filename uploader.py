@@ -55,7 +55,8 @@ for i in range(0,num_lines):
 del tokens[0]
 #access_token = lines2[0]
 '''
-tokens.append(os.environ.get('token1'),os.environ.get('token2'))
+tokens.append(os.environ.get('token1'))
+tokens.append(os.environ.get('token2'))
 f = open('groups.txt')
 lines3 =f.readlines()
 num_lines_groups = sum(1 for line in open('groups.txt'))
