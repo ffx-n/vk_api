@@ -57,6 +57,7 @@ del tokens[0]
 '''
 tokens.append(os.environ.get('token1'))
 tokens.append(os.environ.get('token2'))
+del tokens[0]
 f = open('groups.txt')
 lines3 =f.readlines()
 num_lines_groups = sum(1 for line in open('groups.txt'))
