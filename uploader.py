@@ -183,6 +183,7 @@ for i in range(0,len(urls)):
 print('Успешно! Жду новых постов...')
 
 while True:
+    print(tokens)
     balance = check_balance(RUCAPTCHA_KEY)
     for j in range(0,len(owner_ids)):
         #for i in range(0,len(tokens)):
