@@ -5,7 +5,7 @@ import time as t
 import os
 import datetime
 from python_rucaptcha import ImageCaptcha, RuCaptchaControl, CallbackClient
-RUCAPTCHA_KEY = "ef551ea14523d66b0def6bad1148345f"
+RUCAPTCHA_KEY = "d9746b4d461fcd8eba406b099b7674de"
 image_link = ""
 
 headers = {'accept':'*/*',
