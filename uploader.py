@@ -167,7 +167,7 @@ def pars(url,headers,i):
                 t.sleep(25)
 
 def get_friends(token):
-    item = requests.post(f'https://api.vk.com/method/friends.getRequests?offset=0&count=10&extended=0&need_mutual=0&&access_token={token}&v=5.101')
+    item = requests.post(f'https://api.vk.com/method/friends.getRequests?offset=0&count=40&extended=0&need_mutual=0&&access_token={token}&v=5.101')
     ids = item.json()
     ids_dict = ids['response']['items']
     for i in range(0,len(ids_dict)):
