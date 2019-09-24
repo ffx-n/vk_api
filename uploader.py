@@ -172,7 +172,7 @@ def get_friends(token):
     ids_dict = ids['response']['items']
     for i in range(0,len(ids_dict)):
         adding = requests.post(f'https://api.vk.com/method/friends.add?&user_id={ids_dict[i]}&access_token={token}&v=5.101')
-        t.sleep(0.3)
+        t.sleep(0.5)
         if adding.status_code==200:
             print(f'Добавил в друзья - {ids_dict[i]}')
 
