@@ -194,5 +194,3 @@ while True:
     print(f'Отдыхаю, чтобы не забанило')
     print(f'Баланс - {balance}')
     t.sleep(random.randint(60, 70))
-
-    #375447282166
