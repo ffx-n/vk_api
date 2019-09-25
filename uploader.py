@@ -7,6 +7,7 @@ import datetime
 from python_rucaptcha import ImageCaptcha, RuCaptchaControl, CallbackClient
 RUCAPTCHA_KEY = "ef551ea14523d66b0def6bad1148345f"
 image_link = ""
+##
 
 headers = {'accept':'*/*',
            'user-agent':'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36'}
@@ -190,8 +191,8 @@ while True:
     print(tokens)
     balance = check_balance(RUCAPTCHA_KEY)
     for j in range(0,len(owner_ids)):
-        #for i in range(0,len(tokens)):
-            #get_friends(tokens[i])
+        for i in range(0,len(tokens)):
+            get_friends(tokens[i])
         for i in range(0,len(tokens)):
             sendd_comment(j,tokens[i])
     print(f'Отдыхаю, чтобы не забанило')
