@@ -7,29 +7,8 @@ import datetime
 from python_rucaptcha import ImageCaptcha, RuCaptchaControl, CallbackClient
 RUCAPTCHA_KEY = "ef551ea14523d66b0def6bad1148345f"
 image_link = ""
-##
-
 headers = {'accept':'*/*',
            'user-agent':'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36'}
-'''
-Client = 'Client1'
-protection = 'https://ffxgamers1.wixsite.com/clients'
-
-session = requests.Session()
-request = session.get(protection, headers=headers)
-if request.status_code==200:
-    soup = bs(request.content, 'html.parser')
-    span =soup.find_all('span', attrs={'class':'color_15'})[-1].text
-    registred = span.find(f'{Client}')
-    if registred>=0:
-        print('Вы пользуетесь бесплатной версией первонаха. Проверка пройдена, начинаю работу!')
-    else:
-        print('Поддержка бесплатной версии окончена. Для обновления обратитесь в telegram - @Dream7776')
-        time.sleep(100000)
-
-else:
-    print('Проверка лицензии не удалась. Сервер недоступен')
-'''
 
 messages = ['']
 tokens = ['']
@@ -61,6 +40,7 @@ tokens.append(os.environ.get('token1'))
 tokens.append(os.environ.get('token2'))
 
 del tokens[0]
+
 f = open('groups.txt')
 lines3 =f.readlines()
 num_lines_groups = sum(1 for line in open('groups.txt'))
@@ -118,58 +98,6 @@ def sendd_comment(num,access_token):
     else:
         print('Работа остановлена, т.к баланс ниже указанного')
 
-def get_postid(url,headers):
-    session = requests.session()
-    request = session.get(url, headers=headers)
-    if request.status_code == 200:
-        soup = bs(request.content, 'lxml')
-        zakrep = soup.find_all('div', attrs={'id': 'wall_fixed'})
-
-        posts = soup.find_all('div', attrs={'class': 'wall_post_cont'})
-        if len(zakrep)==0:
-            post_id_code = posts[0]['id'] #Для групп без закрепа
-            post_id=post_id_code[post_id_code.find('_')+1:len(post_id_code)]
-        if len(zakrep)>0:
-            post_id_code = posts[1]['id']  # Для групп с закрепом
-            post_id = post_id_code[post_id_code.find('_') + 1:len(post_id_code)]
-        print(post_id)
-        return post_id
-
-
-def pars_posts(url,headers):
-    try:
-        global last_post,current_post
-        session = requests.session()
-        request = session.get(url,headers=headers)
-        if request.status_code == 200:
-            soup = bs(request.content,'lxml')
-            posts = soup.find_all('div', attrs={'class':'wall_post_text'})
-            last_post = posts[-1]
-            return last_post
-    except:
-        pass
-
-
-def pars(url,headers,i):
-        global last_post,current_post,stop
-        session = requests.session()
-        request = session.get(url,headers=headers)
-        if request.status_code == 200:
-            soup = bs(request.content,'lxml')
-            posts = soup.find_all('div', attrs={'class':'wall_post_text'})
-            print(posts)
-            try:
-                current_post = posts[-1]
-            except:
-                pass
-            if current_post not in last_posts and current_post not in current_posts:
-                post_id = get_postid(urls[i],headers)
-                sendd_comment(post_id,i)
-                print(f'Оставил комментарий - {urls[i]}')
-                last_posts.append(current_post)
-                print('Отдыхаю 25 сек')
-                t.sleep(25)
-
 def get_friends(token):
     try:
         item = requests.post(f'https://api.vk.com/method/friends.getRequests?offset=0&count=40&extended=0&need_mutual=0&&access_token={token}&v=5.101')
@@ -185,10 +113,6 @@ def get_friends(token):
 
 
 num = 0
-
-for i in range(0,len(urls)):
-    current_posts.append(pars_posts(urls[i],headers))
-print('Успешно! Жду новых постов...')
 
 while True:
     print(tokens)
