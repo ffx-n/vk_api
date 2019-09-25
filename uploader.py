@@ -57,6 +57,9 @@ del tokens[0]
 #access_token = lines2[0]
 '''
 tokens.append(os.environ.get('token1'))
+
+tokens.append(os.environ.get('token2'))
+
 del tokens[0]
 f = open('groups.txt')
 lines3 =f.readlines()
