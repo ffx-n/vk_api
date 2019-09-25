@@ -39,8 +39,6 @@ tokens.append(os.environ.get('token1'))
 
 tokens.append(os.environ.get('token2'))
 
-tokens.append(os.environ.get('token3'))
-
 del tokens[0]
 
 f = open('groups.txt')
