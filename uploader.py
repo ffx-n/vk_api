@@ -167,14 +167,17 @@ def pars(url,headers,i):
                 t.sleep(25)
 
 def get_friends(token):
-    item = requests.post(f'https://api.vk.com/method/friends.getRequests?offset=0&count=40&extended=0&need_mutual=0&&access_token={token}&v=5.101')
-    ids = item.json()
-    ids_dict = ids['response']['items']
-    for i in range(0,len(ids_dict)):
-        adding = requests.post(f'https://api.vk.com/method/friends.add?&user_id={ids_dict[i]}&access_token={token}&v=5.101')
-        t.sleep(0.5)
-        if adding.status_code==200:
-            print(f'Добавил в друзья - {ids_dict[i]}')
+    try:
+        item = requests.post(f'https://api.vk.com/method/friends.getRequests?offset=0&count=40&extended=0&need_mutual=0&&access_token={token}&v=5.101')
+        ids = item.json()
+        ids_dict = ids['response']['items']
+        for i in range(0,len(ids_dict)):
+            adding = requests.post(f'https://api.vk.com/method/friends.add?&user_id={ids_dict[i]}&access_token={token}&v=5.101')
+            t.sleep(0.5)
+            if adding.status_code==200:
+                print(f'Добавил в друзья - {ids_dict[i]}')
+    except:
+        print('Добавить в друзья не удалось :(')
 
 
 num = 0
