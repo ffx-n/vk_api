@@ -66,7 +66,7 @@ def sendd_comment(num,access_token):
     except:
         print('Разгадываю капчу')
     balance = check_balance(RUCAPTCHA_KEY)
-    if float(balance)>1:
+    if float(balance)>0:
         try:
             sid = text['error']['captcha_sid']
             image_link = text['error']['captcha_img']
