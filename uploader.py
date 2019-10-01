@@ -37,7 +37,7 @@ del tokens[0]
 '''
 tokens.append(os.environ.get('token1'))
 
-tokens.append(os.environ.get('token2'))
+#tokens.append(os.environ.get('token2'))
 
 del tokens[0]
 
