@@ -49,15 +49,6 @@ for i in range(0,num_lines_groups):
     owner_ids.append(lines3[i])
 del owner_ids[0]
 
-
-global last_post
-last_post = ''
-global current_post
-current_post = ''
-
-current_posts =['']
-last_posts = ['']
-
 version = '5.101'
 
 def check_balance(key):
@@ -110,9 +101,6 @@ def get_friends(token):
                 print(f'Добавил в друзья - {ids_dict[i]}')
     except:
         print('Добавить в друзья не удалось :(')
-
-
-num = 0
 
 while True:
     print(tokens)
