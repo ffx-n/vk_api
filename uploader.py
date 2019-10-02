@@ -14,7 +14,6 @@ messages = ['']
 tokens = ['']
 owner_ids=['']
 owner_id =[]
-urls = ['']
 a=0
 key = ''
 
