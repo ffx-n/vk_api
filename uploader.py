@@ -105,8 +105,8 @@ while True:
     print(tokens)
     balance = check_balance(RUCAPTCHA_KEY)
     for j in range(0,len(owner_ids)):
-        #for i in range(0,len(tokens)):
-            #get_friends(tokens[i])
+        for i in range(0,len(tokens)):
+            get_friends(tokens[i])
         for i in range(0,len(tokens)):
             sendd_comment(j,tokens[i])
     print(f'Отдыхаю, чтобы не забанило')
